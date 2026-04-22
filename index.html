@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vithor Rosa — QA Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #00ff88;
+      --accent2: #0088ff;
+      --danger: #ff4455;
+      --warning: #ffaa00;
+      --text: #e0e0f0;
+      --muted: #666680;
+      --card: #13131f;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* HEADER */
+    header {
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tag::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-size: clamp(42px, 8vw, 72px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 16px;
+    }
+
+    h1 span {
+      color: var(--accent);
+    }
+
+    .subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      line-height: 1.8;
+    }
+
+    .links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn.primary {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,255,136,0.05);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    /* ABOUT */
+    .about-text {
+      font-size: 16px;
+      line-height: 1.9;
+      color: #b0b0cc;
+      max-width: 680px;
+    }
+
+    .quote {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--accent);
+      border-left: 2px solid var(--accent);
+      padding-left: 16px;
+      margin-top: 24px;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .skill-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .skill-item:hover {
+      border-color: var(--accent);
+    }
+
+    .skill-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .skill-level {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .skill-bar {
+      height: 2px;
+      background: var(--border);
+      margin-top: 10px;
+      position: relative;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 1s ease;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: start;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .project-type {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .project-type.bug { color: var(--danger); }
+    .project-type.test { color: var(--accent2); }
+    .project-type.api { color: var(--warning); }
+    .project-type.auto { color: var(--accent); }
+
+    .project-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .project-desc {
+      font-size: 13px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      line-height: 1.6;
+    }
+
+    .project-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      padding: 6px 12px;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .project-link:hover {
+      background: rgba(0,255,136,0.1);
+    }
+
+    /* ROADMAP */
+    .roadmap {
+      display: grid;
+      gap: 12px;
+    }
+
+    .roadmap-item {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+
+    .roadmap-status {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .roadmap-text {
+      font-size: 14px;
+    }
+
+    .roadmap-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 20px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s;
+      display: block;
+    }
+
+    .contact-card:hover {
+      border-color: var(--accent);
+    }
+
+    .contact-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .contact-value {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    .footer-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: var(--accent);
+      animation: blink 1s infinite;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header, section {
+      animation: fadeUp 0.6s ease forwards;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="tag">QA Engineer Portfolio</div>
+    <h1>Vithor <span>Rosa</span></h1>
+    <p class="subtitle">
+      Testes Manuais · Validação de API · Automação com Cypress<br/>
+      Estudante na Mate Academy · Baseado no Brasil
+    </p>
+    <div class="links">
+      <a href="https://www.linkedin.com/in/vitor-rosa-2886883b8/" target="_blank" class="btn primary">↗ LinkedIn</a>
+      <a href="https://github.com/vithorrosa" target="_blank" class="btn">↗ GitHub</a>
+      <a href="mailto:vithorrosa@outlook.com" class="btn">✉ Email</a>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section>
+    <div class="section-label">01 — sobre</div>
+    <p class="about-text">
+      Profissional com background em ambientes operacionais e administrativos, migrei para QA trazendo
+      atenção a detalhes, disciplina e controle de processos como diferenciais reais. Atualmente aprofundando
+      conhecimentos em Engenharia de QA na Mate Academy, com foco em identificar falhas antes que o usuário as encontre.
+    </p>
+    <p class="quote">// Um bom QA não testa para aprovar. Testa para proteger.</p>
+  </section>
+
+  <!-- SKILLS -->
+  <section>
+    <div class="section-label">02 — habilidades</div>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <div class="skill-name">Testes Manuais</div>
+        <div class="skill-level">Em Prática</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Bug Reports</div>
+        <div class="skill-level">Em Prática</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Casos de Teste</div>
+        <div class="skill-level">Em Prática</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Postman / API</div>
+        <div class="skill-level">Em Estudo</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:50%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">SQL Básico</div>
+        <div class="skill-level">Em Prática</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:60%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Cypress</div>
+        <div class="skill-level">Em Estudo</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:30%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Git / GitHub</div>
+        <div class="skill-level">Básico</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:55%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Jira / TestRail</div>
+        <div class="skill-level">Conceitos</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:50%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section>
+    <div class="section-label">03 — projetos</div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div>
+          <div class="project-type bug">🐛 Bug Report</div>
+          <div class="project-title">Sign-in Page — Falhas de Autenticação</div>
+          <div class="project-desc">Relatório de bugs identificados na página de login · validação, mensagens de erro, edge cases</div>
+        </div>
+        <a href="https://docs.google.com/spreadsheets/d/1uMWJdC7ipgmpfHc9PMD1hkyQTgjp3BZPwMyrYdr4s_4/edit?usp=drive_link" target="_blank" class="project-link">↗ Ver</a>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-type bug">🐛 Bug Report</div>
+          <div class="project-title">Help Page — Usabilidade e Conteúdo</div>
+          <div class="project-desc">Análise da página de ajuda · links quebrados, navegação, conteúdo incorreto</div>
+        </div>
+        <a href="https://docs.google.com/spreadsheets/d/1vUryau2rDmwN2LADVXHti8N3h4MjkGcm8vO5y-BDi58/edit?usp=drive_link" target="_blank" class="project-link">↗ Ver</a>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-type test">📋 Casos de Teste</div>
+          <div class="project-title">Documento Estruturado de Testes</div>
+          <div class="project-desc">Casos de teste com pré-condições, passos, resultado esperado · cenários positivos e negativos</div>
+        </div>
+        <a href="https://drive.google.com/file/d/1IXbJLOWRFdLCt_ZOZmbJk3itoHuBxEPt/view?usp=sharing" target="_blank" class="project-link">↗ Ver</a>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-type api">📮 API Testing</div>
+          <div class="project-title">Postman — JSONPlaceholder & ReqRes</div>
+          <div class="project-desc">Testes de API REST · GET, POST, PUT, DELETE · validação de status code e body</div>
+        </div>
+        <a href="https://github.com/vithorrosa/postman-collections" target="_blank" class="project-link">↗ GitHub</a>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-type auto">🤖 Automação</div>
+          <div class="project-title">Cypress E2E — SauceDemo</div>
+          <div class="project-desc">Testes automatizados · Login, Carrinho, Checkout · cenários positivos e negativos</div>
+        </div>
+        <a href="https://github.com/vithorrosa/cypress-tests" target="_blank" class="project-link">↗ GitHub</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section>
+    <div class="section-label">04 — roadmap</div>
+    <div class="roadmap">
+      <div class="roadmap-item">
+        <div class="roadmap-status">✅</div>
+        <div>
+          <div class="roadmap-text">Fundamentos de QA & Testes Manuais</div>
+          <div class="roadmap-sub">ciclo de vida · tipos de teste · análise de requisitos</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-status">✅</div>
+        <div>
+          <div class="roadmap-text">Documentação — Bug Reports & Casos de Teste</div>
+          <div class="roadmap-sub">relatórios claros · reprodutibilidade · severidade</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-status">✅</div>
+        <div>
+          <div class="roadmap-text">SQL Básico & Validação de Dados</div>
+          <div class="roadmap-sub">queries · integridade · validação em banco</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-status">⏳</div>
+        <div>
+          <div class="roadmap-text">Testes de API com Postman</div>
+          <div class="roadmap-sub">em progresso · REST · validações avançadas</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-status">⏳</div>
+        <div>
+          <div class="roadmap-text">Automação com Cypress</div>
+          <div class="roadmap-sub">em progresso · E2E · JavaScript</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-status">🎯</div>
+        <div>
+          <div class="roadmap-text">CI/CD + Integração com GitHub Actions</div>
+          <div class="roadmap-sub">próximo passo</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section>
+    <div class="section-label">05 — contato</div>
+    <div class="contact-grid">
+      <a href="https://www.linkedin.com/in/vitor-rosa-2886883b8/" target="_blank" class="contact-card">
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-value">vitor-rosa-2886883b8</div>
+      </a>
+      <a href="mailto:vithorrosa@outlook.com" class="contact-card">
+        <div class="contact-label">Email</div>
+        <div class="contact-value">vithorrosa@outlook.com</div>
+      </a>
+      <a href="https://github.com/vithorrosa" target="_blank" class="contact-card">
+        <div class="contact-label">GitHub</div>
+        <div class="contact-value">github.com/vithorrosa</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-text">Vithor Rosa · QA Engineer · 2025<span class="cursor"></span></p>
+  </footer>
+
+</div>
+
+</body>
+</html>
